@@ -7,7 +7,7 @@
 from bs4 import BeautifulSoup
 import re
 import urllib.request, urllib.error
-import pymysql
+import pymysql  # 连接 MySQL数据库
 
 
 # 1.入口主程序，爬取网页
@@ -17,6 +17,7 @@ def main():
     ask_url(base_url)
     # 1.爬取网页
     datalist = get_data(base_url)
+    # 将数据保存到数据库中
     save_date(datalist)
 
 
