@@ -136,12 +136,29 @@ def save_date(datalist):
 
     # 使用 cursor() 方法创建一个游标对象 cursor
     cursor = db.cursor()
+    # 当表存在时删除表，重新建立一张新表
+    drop_sql = "DROP TABLE IF EXISTS `movie250`"
+    cursor.execute(drop_sql)
+    create_sql = """CREATE TABLE movie250(
+                    ranking bigint (255) not null,
+                    link varchar (255), 
+                    img_src varchar (255),
+                    zh_title varchar (255),
+                    en_title varchar (255),
+                    rating varchar (255),
+                    judge_num varchar (255),
+                    inq varchar (255),
+                    bd varchar (255),
+                    primary key(ranking)
+                    )"""
+    cursor.execute(create_sql)
 
     # 使用预处理语句创建表
     for data in datalist:
         for index in range(len(data)):
             data[index] = '"' + data[index] + '"'
-        sql = '''insert into movie250 (id,link,img_src,zh_title,en_title,rating,judge_num,inq,bd) values(%s)''' % ",".join(data)
+        sql = """insert into movie250 
+                 (ranking,link,img_src,zh_title,en_title,rating,judge_num,inq,bd) values(%s)""" % ",".join(data)
         # print(sql)
         try:
             # 执行sql语句
